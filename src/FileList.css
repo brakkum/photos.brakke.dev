@@ -1,0 +1,5 @@
+
+.file-nav {
+    display: flex;
+    flex-flow: column;
+}
