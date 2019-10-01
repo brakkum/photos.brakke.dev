@@ -9,7 +9,7 @@ ReactDOM.render(
     <BrowserRouter>
         <Route
             path="/:dir*"
-            render={props => <PhotoBrowser {...props} />}
+            render={match => <PhotoBrowser {...match} />}
         />
     </BrowserRouter>,
     document.getElementById('root')

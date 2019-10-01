@@ -23,6 +23,7 @@ server.post("/api/get-dir", (request, response) => {
     dirs.pop();
     // recombine dirs
     let parent_dir = dirs.join("/");
+    console.log(`dir_path: ${dir_path}`);
     console.log(`parent: ${parent_dir}`);
 
     if (fs.existsSync(dir_path) && fs.lstatSync(dir_path).isDirectory()) {
