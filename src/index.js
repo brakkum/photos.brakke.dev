@@ -1,6 +1,6 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
-import PhotoBrowser from "./PhotoBrowser";
+import FileBrowser from "./FileBrowser";
 import ReactDOM from 'react-dom';
 import React from 'react';
 import './index.css';
@@ -9,7 +9,7 @@ ReactDOM.render(
     <BrowserRouter>
         <Route
             path="/:dir*"
-            render={match => <PhotoBrowser {...match} />}
+            render={match => <FileBrowser {...match} />}
         />
     </BrowserRouter>,
     document.getElementById('root')

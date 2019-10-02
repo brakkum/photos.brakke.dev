@@ -1,0 +1,10 @@
+
+.file-nav {
+    border: 1px solid red;
+    grid-area: file-nav;
+    overflow: auto;
+}
+
+.selected {
+    border: 1px solid green;
+}

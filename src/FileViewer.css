@@ -1,0 +1,5 @@
+
+.file-view {
+    border: 1px solid blue;
+    grid-area: file-view;
+}

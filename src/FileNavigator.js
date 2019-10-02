@@ -1,8 +1,8 @@
 import { withRouter } from "react-router-dom";
+import "./FileNavigator.css";
 import React from "react";
-import "./FileList.css";
 
-class FileList extends React.Component {
+class FileNavigator extends React.Component {
 
     constructor(props) {
         super(props);
@@ -10,14 +10,11 @@ class FileList extends React.Component {
             directories: [],
             parentDir: "",
             files: [],
-            sendingRequest: false
+            selection: ""
         };
     }
 
-    _sendingRequest = false;
-
     fetchDirectoryContents = dir => {
-        this._sendingRequest = true;
         fetch(`http://${window.location.hostname}:3001/api/get-dir`, {
             method: "post",
             body: JSON.stringify({
@@ -39,7 +36,6 @@ class FileList extends React.Component {
                 } else {
                     this.props.history.push("/");
                 }
-                this._sendingRequest = false;
             });
     };
 
@@ -48,17 +44,27 @@ class FileList extends React.Component {
         dir = dir[0] === "/" ? dir : `/${dir}`;
         this.props.history.push(dir);
         this.props.setSelection("");
+        this.setState({ selection: "" });
     };
 
-    componentDidUpdate = () => {
-        this.fetchDirectoryContents(this.props.dir);
+    setSelection = file => {
+        this.props.setSelection(file);
+        console.log(file)
+        this.setState({ selection: file });
+    };
+
+    componentDidUpdate = prevProps => {
+        if (this.props.dir !== prevProps.dir) {
+            this.fetchDirectoryContents(this.props.dir);
+        }
     };
 
     shouldComponentUpdate = (nextProps, nextState) => {
         return (
             this.props.dir !== nextProps.dir ||
             this.state.directories.length !== nextState.directories.length ||
-            this.state.files.length !== nextState.files.length
+            this.state.files.length !== nextState.files.length ||
+            this.state.selection !== nextState.selection
         );
     };
 
@@ -73,17 +79,30 @@ class FileList extends React.Component {
         let dir = this.props.dir;
         return (
             <nav className="file-nav">
-                {!this._sendingRequest ?
+                {(this.state.directories.length === 0 && this.state.files.length === 0) ?
                     <span>r</span>
                     :
                     <>
                         {dir !== "" && <div onClick={() => this.updateDirectory(`${parentDir}`)}>Back</div>}
                         {directories.map((directory, i) => {
                             let link = dir ? `/${dir}/${directory}` : `/${directory}`;
-                            return <div key={i} to={link} onClick={() => this.updateDirectory(link)}>{directory}</div>
+                            return <div
+                                className="directory"
+                                key={i}
+                                to={link}
+                                onClick={() => this.updateDirectory(link)}
+                            >
+                                {directory}
+                            </div>
                         })}
                         {files.map((file, i) => {
-                            return <div key={i} onClick={() => this.props.setSelection(file)}>{file}</div>
+                            return <div
+                                className={"file " + (this.state.selection === file ? "selected" : "")}
+                                key={i}
+                                onClick={() => this.state.selection !== file ? this.setSelection(file) : null}
+                            >
+                                {file}
+                            </div>
                         })}
                     </>
                 }
@@ -92,4 +111,4 @@ class FileList extends React.Component {
     }
 };
 
-export default withRouter(FileList);
+export default withRouter(FileNavigator);

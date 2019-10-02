@@ -1,0 +1,21 @@
+
+.file-browser {
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+        "breadcrumbs breadcrumbs"
+        "file-nav file-view";
+    grid-template-columns: minmax(200px, 20vw) 80vw;
+    grid-template-rows: 50px auto;
+}
+
+@media screen and (max-width: 800px) {
+    .file-browser {
+        grid-template-areas:
+            "breadcrumbs"
+            "file-nav"
+            "file-view";
+        grid-template-columns: 100%;
+        grid-template-rows: 50px 200px auto;
+    }
+}
