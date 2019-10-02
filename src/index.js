@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 import FileBrowser from "./FileBrowser";
 import ReactDOM from 'react-dom';
@@ -7,10 +7,12 @@ import './index.css';
 
 ReactDOM.render(
     <BrowserRouter>
-        <Route
-            path="/:dir*"
-            render={match => <FileBrowser {...match} />}
-        />
+        <Switch>
+            <Route
+                path="/:dir*"
+                render={match => <FileBrowser {...match} />}
+            />
+        </Switch>
     </BrowserRouter>,
     document.getElementById('root')
 );

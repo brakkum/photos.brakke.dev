@@ -1,6 +1,6 @@
 
 .file-nav {
-    border: 1px solid red;
+    background: rgb(255, 197, 197);
     grid-area: file-nav;
     overflow: auto;
 }

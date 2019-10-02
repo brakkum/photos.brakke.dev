@@ -1,5 +1,5 @@
 
 .bread-crumbs {
     grid-area: breadcrumbs;
-    border: 1px solid orange;
+    background: rgb(255, 233, 191);
 }

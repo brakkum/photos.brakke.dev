@@ -1,5 +1,14 @@
 
 .file-view {
-    border: 1px solid blue;
+    background: rgb(205, 205, 255);
     grid-area: file-view;
+}
+
+.loading-div {
+    transition: .5s;
+    opacity: 1;
+}
+
+.loading-div.done-loading {
+    opacity: 0;
 }

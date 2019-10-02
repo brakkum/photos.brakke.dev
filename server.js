@@ -10,7 +10,7 @@ server.use(cors());
 server.post("/api/get-dir", (request, response) => {
     console.log(request.body)
     const dir = request.body.dir || "";
-    const dir_path = `public/photos/${dir}`;
+    const dir_path = `public/files/${dir}`;
     console.log(`got dir: ${dir} ${Date.now()}`);
 
     // get parent dir for navigation
@@ -56,6 +56,11 @@ server.post("/api/get-dir", (request, response) => {
             parent_dir
         });
     }
+});
+
+server.get("/api/get-file", (request, response) => {
+    const file = request.body.file || "";
+    console.log(`got file: ${file}`);
 });
 
 server.listen(port, () => console.log(`running on ${port}`));

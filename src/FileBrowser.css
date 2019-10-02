@@ -5,7 +5,7 @@
     grid-template-areas:
         "breadcrumbs breadcrumbs"
         "file-nav file-view";
-    grid-template-columns: minmax(200px, 20vw) 80vw;
+    grid-template-columns: minmax(200px, 20vw) minmax(600px, 80vw);
     grid-template-rows: 50px auto;
 }
 
