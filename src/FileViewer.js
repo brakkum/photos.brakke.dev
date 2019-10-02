@@ -11,14 +11,18 @@ const FileViewer = ({ dir, file }) => {
 
     return (
         <div className="file-view">
-            {file !== "" && <div className={"loading-div " + (isLoaded ? "done-loading" : "")}>Loading...</div>}
-            {file !== "" && imageTypes.includes(fileExt) &&
-                <img
-                    src={`/files/${dir}/${file}`}
-                >
+            {file !== "" && <div className={"loading-div " + (isLoaded ? "loaded" : "")}>Loading...</div>}
+            <div className="view-container">
+                {file !== "" && imageTypes.includes(fileExt) &&
+                    <img
+                        className={"photo"}
+                        onLoad={() => setIsLoaded(true)}
+                        src={`/files/${dir}/${file}`}
+                    >
 
-                </img>
-            }
+                    </img>
+                }
+            </div>
         </div>
     )
 };

@@ -5,10 +5,30 @@
 }
 
 .loading-div {
+    position: absolute;
     transition: .5s;
     opacity: 1;
 }
 
-.loading-div.done-loading {
+.loading-div.loaded {
     opacity: 0;
+}
+
+.view-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo {
+    max-width: 90%;
+    max-height: 80vh;
+    height: auto;
+}
+
+@media screen and (max-width: 800px) {
+    .photo {
+        max-height: 50vh;
+    }
 }

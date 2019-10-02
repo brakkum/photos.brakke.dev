@@ -58,9 +58,4 @@ server.post("/api/get-dir", (request, response) => {
     }
 });
 
-server.get("/api/get-file", (request, response) => {
-    const file = request.body.file || "";
-    console.log(`got file: ${file}`);
-});
-
 server.listen(port, () => console.log(`running on ${port}`));
