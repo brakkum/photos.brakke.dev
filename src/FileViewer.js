@@ -17,12 +17,14 @@ const FileViewer = ({ dir, file }) => {
         <div className="file-view">
             {file !== "" && <div className={"loading-div " + (isLoaded ? "loaded" : "")}>Loading...</div>}
             <div className="view-container">
-                {file !== "" && imageTypes.includes(fileExt) &&
+                {(file !== "" && imageTypes.includes(fileExt)) ?
                     <img
                         className={"photo " + (isLoaded ? "loaded" : "")}
                         onLoad={() => setIsLoaded(true)}
                         src={`/files/${dir}/${file}`}
                     />
+                    :
+                    <h4>&lt;&lt; Pick Something!</h4>
                 }
             </div>
         </div>

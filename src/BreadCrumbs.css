@@ -17,6 +17,7 @@
     margin-right: 10px;
     color: rgb(144, 144, 199);
     cursor: pointer;
+    text-align: center;
 }
 
 .bread-crumb:hover {
@@ -25,4 +26,10 @@
 
 .bread-crumb-divider {
     margin-right: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    .bread-crumb {
+        font-size: .8em;
+    }
 }
