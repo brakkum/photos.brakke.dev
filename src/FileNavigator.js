@@ -84,15 +84,19 @@ class FileNavigator extends React.Component {
                     :
                     <>
                         <div
-                            className={"item " + (dir !== "" ? "back-button" : "")}
+                            className={"item " + (dir !== "" ? "back-button hoverable" : "")}
                             onClick={dir !== "" ? () => this.updateDirectory(`${parentDir}`) : null}
                         >
-                            {dir !== "" ? <span>Back</span> : ""}
+                            {dir !== "" ? <span>Back</span> : "/"}
                         </div>
+                        {directories.length > 0 && <div className="items-label">
+                                Directories
+                            </div>
+                        }
                         {directories.map((directory, i) => {
                             let link = dir ? `/${dir}/${directory}` : `/${directory}`;
                             return <div
-                                className="item directory"
+                                className="item directory hoverable"
                                 key={i}
                                 to={link}
                                 onClick={() => this.updateDirectory(link)}
@@ -102,9 +106,13 @@ class FileNavigator extends React.Component {
                                 </span>
                             </div>
                         })}
+                        {files.length > 0 && <div className="items-label">
+                                Files
+                            </div>
+                        }
                         {files.map((file, i) => {
                             return <div
-                                className={"item file " + (this.state.selection === file ? "selected" : "")}
+                                className={"item file hoverable " + (this.state.selection === file ? "selected" : "")}
                                 key={i}
                                 onClick={() => this.state.selection !== file ? this.setSelection(file) : null}
                             >
