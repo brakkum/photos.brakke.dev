@@ -15,7 +15,7 @@ function FileBrowser({ match }) {
 
     return(
         <div className="file-browser">
-            <BreadCrumbs />
+            <BreadCrumbs dir={dir} />
             <FileNavigator dir={dir} selection={selection} setSelection={setSelection} />
             <FileViewer dir={dir} file={selection} />
         </div>

@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 import FileBrowser from "./FileBrowser";
 import ReactDOM from 'react-dom';
+import "bulma/css/bulma.css";
 import React from 'react';
 import './index.css';
 

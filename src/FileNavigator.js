@@ -78,52 +78,54 @@ class FileNavigator extends React.Component {
         let files = this.state.files;
         let dir = this.props.dir;
         return (
-            <nav className="file-nav">
-                {(this.state.directories.length === 0 && this.state.files.length === 0) ?
-                    <span>Loading...</span>
-                    :
-                    <>
-                        <div
-                            className={"item " + (dir !== "" ? "back-button hoverable" : "")}
-                            onClick={dir !== "" ? () => this.updateDirectory(`${parentDir}`) : null}
-                        >
-                            {dir !== "" ? <span>Back</span> : "/"}
-                        </div>
-                        {directories.length > 0 && <div className="items-label">
-                                Directories
-                            </div>
-                        }
-                        {directories.map((directory, i) => {
-                            let link = dir ? `/${dir}/${directory}` : `/${directory}`;
-                            return <div
-                                className="item directory hoverable"
-                                key={i}
-                                to={link}
-                                onClick={() => this.updateDirectory(link)}
-                            >
-                                <span>
-                                    {directory}
-                                </span>
-                            </div>
-                        })}
-                        {files.length > 0 && <div className="items-label">
-                                Files
-                            </div>
-                        }
-                        {files.map((file, i) => {
-                            return <div
-                                className={"item file hoverable " + (this.state.selection === file ? "selected" : "")}
-                                key={i}
-                                onClick={() => this.state.selection !== file ? this.setSelection(file) : null}
-                            >
-                                <span>
-                                    {file}
-                                </span>
-                            </div>
-                        })}
-                    </>
-                }
-            </nav>
+            <>
+                <div
+                    className={"back-container item " + (dir !== "" ? "back-button hoverable" : "")}
+                    onClick={dir !== "" ? () => this.updateDirectory(`${parentDir}`) : null}
+                >
+                    {dir !== "" ? <span>Back</span> : "/"}
+                </div>
+                <nav className="file-nav">
+                    {(this.state.directories.length === 0 && this.state.files.length === 0) ?
+                        <span>Loading...</span>
+                        :
+                        <>
+                            {directories.length > 0 && <div className="items-label">
+                                    Directories
+                                </div>
+                            }
+                            {directories.map((directory, i) => {
+                                let link = dir ? `/${dir}/${directory}` : `/${directory}`;
+                                return <div
+                                    className="item directory hoverable"
+                                    key={i}
+                                    to={link}
+                                    onClick={() => this.updateDirectory(link)}
+                                >
+                                    <span>
+                                        {directory}
+                                    </span>
+                                </div>
+                            })}
+                            {files.length > 0 && <div className="items-label">
+                                    Files
+                                </div>
+                            }
+                            {files.map((file, i) => {
+                                return <div
+                                    className={"item file hoverable " + (this.state.selection === file ? "selected" : "")}
+                                    key={i}
+                                    onClick={() => this.state.selection !== file ? this.setSelection(file) : null}
+                                >
+                                    <span>
+                                        {file}
+                                    </span>
+                                </div>
+                            })}
+                        </>
+                    }
+                </nav>
+            </>
         )
     }
 };

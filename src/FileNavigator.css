@@ -5,6 +5,14 @@
     overflow: auto;
 }
 
+.back-container {
+    grid-area: back-container;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .items-label {
     font-size: .9em;
     padding: 2px 5px;

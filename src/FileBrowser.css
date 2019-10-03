@@ -4,18 +4,19 @@
     display: grid;
     grid-template-areas:
         "breadcrumbs breadcrumbs"
+        "back-container file-view"
         "file-nav file-view";
     grid-template-columns: minmax(200px, 20vw) minmax(600px, 80vw);
-    grid-template-rows: 50px auto;
+    grid-template-rows: 50px 50px auto;
 }
 
 @media screen and (max-width: 800px) {
     .file-browser {
         grid-template-areas:
-            "breadcrumbs"
-            "file-nav"
-            "file-view";
-        grid-template-columns: 100%;
+            "back-container breadcrumbs"
+            "file-nav file-nav"
+            "file-view file-view";
+        grid-template-columns: minmax(20%, 150px) auto;
         grid-template-rows: 50px 200px auto;
     }
 }
