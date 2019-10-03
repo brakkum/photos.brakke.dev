@@ -80,28 +80,34 @@ class FileNavigator extends React.Component {
         return (
             <nav className="file-nav">
                 {(this.state.directories.length === 0 && this.state.files.length === 0) ?
-                    <span>r</span>
+                    <span>Loading...</span>
                     :
                     <>
-                        {dir !== "" && <div onClick={() => this.updateDirectory(`${parentDir}`)}>Back</div>}
+                        <div className="item" onClick={dir !== "" ? () => this.updateDirectory(`${parentDir}`) : null}>
+                            {dir !== "" ? <span>Back</span> : ""}
+                        </div>
                         {directories.map((directory, i) => {
                             let link = dir ? `/${dir}/${directory}` : `/${directory}`;
                             return <div
-                                className="directory"
+                                className="item directory"
                                 key={i}
                                 to={link}
                                 onClick={() => this.updateDirectory(link)}
                             >
-                                {directory}
+                                <span>
+                                    {directory}
+                                </span>
                             </div>
                         })}
                         {files.map((file, i) => {
                             return <div
-                                className={"file " + (this.state.selection === file ? "selected" : "")}
+                                className={"item file " + (this.state.selection === file ? "selected" : "")}
                                 key={i}
                                 onClick={() => this.state.selection !== file ? this.setSelection(file) : null}
                             >
-                                {file}
+                                <span>
+                                    {file}
+                                </span>
                             </div>
                         })}
                     </>
