@@ -83,7 +83,10 @@ class FileNavigator extends React.Component {
                     <span>Loading...</span>
                     :
                     <>
-                        <div className="item" onClick={dir !== "" ? () => this.updateDirectory(`${parentDir}`) : null}>
+                        <div
+                            className={"item " + (dir !== "" ? "back-button" : "")}
+                            onClick={dir !== "" ? () => this.updateDirectory(`${parentDir}`) : null}
+                        >
                             {dir !== "" ? <span>Back</span> : ""}
                         </div>
                         {directories.map((directory, i) => {
