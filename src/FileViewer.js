@@ -16,6 +16,7 @@ const FileViewer = ({ dir, file }) => {
     return (
         <div className="file-view">
             {file !== "" && <div className={"loading-div " + (isLoaded ? "loaded" : "")}>Loading...</div>}
+            {file !== "" && <div className={"get-link " + (isLoaded ? "loaded" : "")}>Link</div>}
             <div className="view-container">
                 {(file !== "" && imageTypes.includes(fileExt)) ?
                     <img

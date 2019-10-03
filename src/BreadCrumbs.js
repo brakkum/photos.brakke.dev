@@ -26,7 +26,7 @@ const BreadCrumbs = ({ path, history, setSelection }) => {
                             /
                         </div>);
                         if (dirs[0] !== "") {
-                            elements.push(<div key={`${i}-start-dv`} className="bread-crumb-divider">
+                            elements.push(<div key={`${i}-start-dv`} className="bread-crumb-divider has-text-grey-light">
                                 &gt;
                             </div>);
                         }
@@ -42,7 +42,7 @@ const BreadCrumbs = ({ path, history, setSelection }) => {
                         {dir}
                     </div>);
                     if (i !== dirs.length - 1) {
-                        elements.push(<div key={`${i}-dv`} className="bread-crumb-divider">
+                        elements.push(<div key={`${i}-dv`} className="bread-crumb-divider has-text-grey-light">
                             &gt;
                         </div>);
                     }

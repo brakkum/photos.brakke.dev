@@ -1,6 +1,6 @@
 
 .file-nav {
-    background: rgb(255, 197, 197);
+    background: rgb(235, 235, 235);
     grid-area: file-nav;
     overflow: auto;
 }
@@ -33,11 +33,11 @@
 }
 
 .hoverable:hover {
-    background-color: aliceblue;
+    background-color: rgb(206, 228, 247);
 }
 
 .selected.hoverable:hover {
-    background-color: rgb(176, 255, 229);
+    background-color: rgb(163, 235, 211);
 }
 
 .directory {

@@ -1,6 +1,6 @@
 
 .file-view {
-    background: rgb(205, 205, 255);
+    background: rgb(207, 207, 207);
     grid-area: file-view;
 }
 
@@ -19,6 +19,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.get-link {
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    margin-top: 15px;
+    transition: .5s;
+    opacity: 0;
+}
+
+.get-link.loaded {
+    opacity: 1;
 }
 
 .photo {
