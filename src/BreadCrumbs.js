@@ -2,7 +2,7 @@ import { withRouter } from "react-router-dom";
 import "./BreadCrumbs.css";
 import React from "react";
 
-const BreadCrumbs = ({ path, history }) => {
+const BreadCrumbs = ({ path, history, setSelection }) => {
 
     let dirs = path.split("/");
 
@@ -18,7 +18,10 @@ const BreadCrumbs = ({ path, history }) => {
                         elements.push(<div
                             key={`${i}-start-bc`}
                             className="bread-crumb"
-                            onClick={() => history.push(`/`)}
+                            onClick={() => {
+                                history.push(`/`);
+                                setSelection("");
+                            }}
                         >
                             /
                         </div>);
@@ -31,7 +34,10 @@ const BreadCrumbs = ({ path, history }) => {
                     elements.push(<div
                         key={`${i}-bc`}
                         className="bread-crumb"
-                        onClick={() => history.push(`/${link}`)}
+                        onClick={i !== dirs.length - 1 ? () => {
+                            history.push(`/${link}`);
+                            setSelection("");
+                        } : null}
                     >
                         {dir}
                     </div>);
