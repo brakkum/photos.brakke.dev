@@ -3,3 +3,26 @@
     grid-area: breadcrumbs;
     background: rgb(255, 233, 191);
 }
+
+.bread-crumbs-container {
+    width: 95%;
+    margin: auto;
+    height: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.bread-crumb {
+    margin-right: 10px;
+    color: rgb(144, 144, 199);
+    cursor: pointer;
+}
+
+.bread-crumb:hover {
+    color: rgb(135, 162, 192);
+}
+
+.bread-crumb-divider {
+    margin-right: 10px;
+}

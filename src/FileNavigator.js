@@ -49,7 +49,6 @@ class FileNavigator extends React.Component {
 
     setSelection = file => {
         this.props.setSelection(file);
-        console.log(file)
         this.setState({ selection: file });
     };
 

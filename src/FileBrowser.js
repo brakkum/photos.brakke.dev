@@ -10,12 +10,9 @@ function FileBrowser({ match }) {
     let dir = match.params.dir || ""; // match.params.dir ? decodeURIComponent(match.params.dir) : "";
     let [selection, setSelection] = useState("");
 
-    console.log(`dir: ${dir}`);
-    console.log(`sel: ${selection}`);
-
     return(
         <div className="file-browser">
-            <BreadCrumbs dir={dir} />
+            <BreadCrumbs path={dir} />
             <FileNavigator dir={dir} selection={selection} setSelection={setSelection} />
             <FileViewer dir={dir} file={selection} />
         </div>
