@@ -7,6 +7,7 @@
 .loading-div {
     position: absolute;
     transition: .5s;
+    margin: 15px 20px;
     opacity: 1;
 }
 
@@ -22,13 +23,29 @@
     position: relative;
 }
 
-.get-link {
+.file-copy-link {
     position: absolute;
+    top: -500px;
+}
+
+.link-copied {
+    opacity: 0;
+    transition: .8s;
+    margin: 15px 20px;
+    position: absolute;
+}
+
+.link-copied.copied {
+    opacity: 1;
+}
+
+.get-link {
+    position: absolute !important;
     right: 0;
-    margin-right: 20px;
-    margin-top: 15px;
+    margin: 15px 20px;
     transition: .5s;
     opacity: 0;
+    z-index: 99;
 }
 
 .get-link.loaded {

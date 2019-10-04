@@ -1,13 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./FileViewer.css";
 
 function FileViewer({ dir, file }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
+    const copyRef = useRef(null);
+    const [linkCopied, setLinkCopied] = useState(false);
 
     useEffect(() => {
         setIsLoaded(false);
+        setTimeout(() => {
+            setLinkCopied(false);
+        }, 2000);
     }, [file]);
+
+    const copyLinkToClipboard = () => {
+        copyRef.current.select();
+        console.log(copyRef.current.value)
+        document.execCommand('copy');
+        setLinkCopied(true);
+        setTimeout(() => {
+            setLinkCopied(false);
+        }, 2000);
+    };
 
     const fileExt = file.split(".").pop().toLowerCase();
     const imageTypes = ["jpg", "jpeg", "tiff"];
@@ -17,8 +32,34 @@ function FileViewer({ dir, file }) {
 
     return (
         <div className="file-view">
-            {file !== "" && <div className={"loading-div " + (isLoaded ? "loaded" : "")}>Loading...</div>}
-            {file !== "" && <div className={"get-link " + (isLoaded ? "loaded" : "")}>Link</div>}
+            <input
+                key={file}
+                ref={copyRef}
+                className="file-copy-link"
+                defaultValue={`${window.location.host}/files/${dir}/${file}`}
+            />
+            {file !== "" &&
+                <div
+                    className={"loading-div " + (isLoaded ? "loaded" : "")}
+                >
+                    Loading...
+                </div>
+            }
+            {file !== "" &&
+                <div
+                    className={"link-copied " + (linkCopied ? "copied" : "")}
+                >
+                    Link Copied
+                </div>
+            }
+            {file !== "" && document.queryCommandSupported('copy') &&
+                <div
+                    onClick={copyLinkToClipboard}
+                    className={"get-link button " + (isLoaded ? "loaded" : "")}
+                >
+                        Link
+                </div>
+            }
             <div className="view-container">
                 {isPhoto ?
                     <img
@@ -36,7 +77,6 @@ function FileViewer({ dir, file }) {
                             controls
                         >
                             <source src={`/files/${dir}/${file}`} type="video/mp4" />
-                            <source src={`/files/${dir}/${file}`} type="video/mov" />
                         </video>
                     :
                     <h4>&lt;&lt; Pick Something!</h4>
