@@ -43,6 +43,18 @@
     opacity: 0;
 }
 
+.video {
+    max-width: 90%;
+    max-height: 80vh;
+    height: auto;
+    transition: 0s;
+    opacity: 0;
+}
+
+.video.loaded {
+    transition: 1s;
+}
+
 .loaded {
     opacity: 1;
 }
