@@ -11,7 +11,7 @@ function FileViewer({ dir, file }) {
         setIsLoaded(false);
         setTimeout(() => {
             setLinkCopied(false);
-        }, 2000);
+        }, 1000);
     }, [file]);
 
     const copyLinkToClipboard = () => {
@@ -21,7 +21,7 @@ function FileViewer({ dir, file }) {
         setLinkCopied(true);
         setTimeout(() => {
             setLinkCopied(false);
-        }, 2000);
+        }, 1000);
     };
 
     const fileExt = file.split(".").pop().toLowerCase();
@@ -53,12 +53,15 @@ function FileViewer({ dir, file }) {
                 </div>
             }
             {file !== "" && document.queryCommandSupported('copy') &&
-                <div
+                <button
                     onClick={copyLinkToClipboard}
-                    className={"get-link button " + (isLoaded ? "loaded" : "")}
+                    className={"get-link button " +
+                        (linkCopied ? " is-danger " : " is-link is-outlined ") +
+                        (isLoaded ? " loaded " : "")
+                    }
                 >
                         Link
-                </div>
+                </button>
             }
             <div className="view-container">
                 {isPhoto ?
