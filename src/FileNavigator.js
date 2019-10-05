@@ -10,7 +10,8 @@ class FileNavigator extends React.Component {
             directories: [],
             parentDir: "",
             files: [],
-            selection: ""
+            selection: "",
+            loaded: false
         };
     }
 
@@ -29,10 +30,12 @@ class FileNavigator extends React.Component {
                     this.setState({
                         directories: json.directories.sort(),
                         files: json.files.sort(),
-                        parentDir: json.parent_dir || ""
+                        parentDir: json.parent_dir || "",
+                        loaded: true
                     });
                 } else if (json.parent_dir) {
                     this.props.history.push(`/${json.parent_dir}`);
+                    this.setState({ loaded: true });
                 } else {
                     this.props.history.push("/");
                 }
@@ -50,10 +53,12 @@ class FileNavigator extends React.Component {
     setSelection = file => {
         this.props.setSelection(file);
         this.setState({ selection: file });
+        this.props.history.push(`#${file}`);
     };
 
     componentDidUpdate = prevProps => {
         if (this.props.dir !== prevProps.dir) {
+            this.setState({ loaded: false });
             this.fetchDirectoryContents(this.props.dir);
         }
     };
@@ -63,17 +68,23 @@ class FileNavigator extends React.Component {
             this.props.dir !== nextProps.dir ||
             this.state.directories.length !== nextState.directories.length ||
             this.state.files.length !== nextState.files.length ||
-            this.state.selection !== nextState.selection
+            this.state.selection !== nextState.selection ||
+            this.state.loaded !== nextState.loaded
         );
     };
 
     componentDidMount = () => {
+        let hash = window.location.hash;
+        hash = hash.replace("#", "");
+        this.setSelection(hash);
+        this.setState({ loaded: false });
         this.fetchDirectoryContents(this.props.dir);
     };
 
     render() {
         let directories = this.state.directories;
         let parentDir = this.state.parentDir;
+        let loaded = this.state.loaded;
         let files = this.state.files;
         let dir = this.props.dir;
         return (
@@ -85,9 +96,7 @@ class FileNavigator extends React.Component {
                     {dir !== "" ? <span>Back</span> : "/"}
                 </div>
                 <nav className="file-nav">
-                    {(this.state.directories.length === 0 && this.state.files.length === 0) ?
-                        <span>Loading...</span>
-                        :
+                    {loaded && (directories.length > 0 || files.length > 0) ?
                         <>
                             {directories.length > 0 && <div className="items-label">
                                     Directories
@@ -122,6 +131,11 @@ class FileNavigator extends React.Component {
                                 </div>
                             })}
                         </>
+                        :
+                        loaded ?
+                            <h2 style={{margin: "20px auto", textAlign: "center"}}>Looks like this directory is empty!</h2>
+                        :
+                            <h2 style={{margin: "20px auto", textAlign: "center"}}>Loading...</h2>
                     }
                 </nav>
             </>
