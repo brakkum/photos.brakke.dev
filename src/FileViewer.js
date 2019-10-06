@@ -1,22 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./FileViewer.css";
 
-function FileViewer({ dir, file }) {
+function FileViewer({ currentDirectory, selectedFile }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
-    const copyRef = useRef(null);
     const [linkCopied, setLinkCopied] = useState(false);
+    const copyRef = useRef(null);
 
     useEffect(() => {
         setIsLoaded(false);
         setTimeout(() => {
             setLinkCopied(false);
         }, 1000);
-    }, [file]);
+    }, [selectedFile]);
 
     const copyLinkToClipboard = () => {
         copyRef.current.select();
-        console.log(copyRef.current.value)
         document.execCommand('copy');
         setLinkCopied(true);
         setTimeout(() => {
@@ -24,7 +23,7 @@ function FileViewer({ dir, file }) {
         }, 1000);
     };
 
-    const fileExt = file.split(".").pop().toLowerCase();
+    const fileExt = selectedFile.split(".").pop().toLowerCase();
     const imageTypes = ["jpg", "jpeg", "tiff"];
     const videoTypes = ["mov", "mp4"];
     const isPhoto = imageTypes.includes(fileExt);
@@ -33,53 +32,53 @@ function FileViewer({ dir, file }) {
     return (
         <div className="file-view">
             <input
-                key={file}
+                key={selectedFile}
                 ref={copyRef}
                 className="file-copy-link"
-                defaultValue={`${window.location.host}/files/${dir}/${file}`}
+                defaultValue={`${window.location.host}/files/${currentDirectory}/${selectedFile}`}
             />
-            {file !== "" &&
-                <div
-                    className={"loading-div " + (isLoaded ? "loaded" : "")}
-                >
-                    Loading...
-                </div>
-            }
-            {file !== "" &&
-                <div
-                    className={"link-copied " + (linkCopied ? "copied" : "")}
-                >
-                    Link Copied
-                </div>
-            }
-            {file !== "" && document.queryCommandSupported('copy') &&
-                <button
-                    onClick={copyLinkToClipboard}
-                    className={"get-link button " +
-                        (linkCopied ? " is-danger " : " is-link is-outlined ") +
-                        (isLoaded ? " loaded " : "")
+            {selectedFile !== "" &&
+                <>
+                    <div
+                        className={"loading-div " + (isLoaded ? "loaded" : "")}
+                    >
+                        Loading...
+                    </div>
+                    <div
+                        className={"link-copied " + (linkCopied ? "copied" : "")}
+                    >
+                        Link Copied
+                    </div>
+                    {document.queryCommandSupported('copy') &&
+                        <button
+                            onClick={copyLinkToClipboard}
+                            className={"get-link button " +
+                                (linkCopied ? " is-danger " : " is-link is-outlined ") +
+                                (isLoaded ? " loaded " : "")
+                            }
+                        >
+                                Link
+                        </button>
                     }
-                >
-                        Link
-                </button>
+                </>
             }
             <div className="view-container">
                 {isPhoto ?
                     <img
                         className={"photo " + (isLoaded ? "loaded" : "")}
                         onLoad={() => setIsLoaded(true)}
-                        alt={file}
-                        src={`/files/${dir}/${file}`}
+                        alt={selectedFile}
+                        src={`/files/${currentDirectory}/${selectedFile}`}
                     />
                     :
                     isVideo ?
                         <video
                             className={"video " + (isLoaded ? "loaded" : "")}
-                            key={file}
+                            key={selectedFile}
                             onLoadedMetadata={() => setIsLoaded(true)}
                             controls
                         >
-                            <source src={`/files/${dir}/${file}`} type="video/mp4" />
+                            <source src={`/files/${currentDirectory}/${selectedFile}`} type="video/mp4" />
                         </video>
                     :
                     <h4>&lt;&lt; Pick Something!</h4>

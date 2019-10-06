@@ -5,16 +5,40 @@ import BreadCrumbs from "./BreadCrumbs";
 import FileViewer from "./FileViewer";
 import "./FileBrowser.css";
 
-function FileBrowser({ match }) {
+function FileBrowser({ match, history }) {
 
-    let dir = match.params.dir || ""; // match.params.dir ? decodeURIComponent(match.params.dir) : "";
-    let [selection, setSelection] = useState("");
+    // current directory structure
+    const currentDirectory = match.params.dir || ""; // match.params.dir ? decodeURIComponent(match.params.dir) : "";
+    // current selected file
+    const [selectedFile, setSelectedFile] = useState("");
+    // last child directory
+    const [lastChildDirectory, setLastChildDirectory] = useState("");
+
+    // push new path to history
+    const setCurrentDirectory = (path, childDirectory = "") => {
+        path = path[0] !== "/" ? `/${path}` : path;
+        setLastChildDirectory(childDirectory);
+        history.push(path);
+    };
 
     return(
         <div className="file-browser">
-            <BreadCrumbs path={dir} setSelection={setSelection} />
-            <FileNavigator dir={dir} selection={selection} setSelection={setSelection} />
-            <FileViewer dir={dir} file={selection} />
+            <BreadCrumbs
+                currentDirectory={currentDirectory}
+                setCurrentDirectory={setCurrentDirectory}
+                setSelectedFile={setSelectedFile}
+            />
+            <FileNavigator
+                currentDirectory={currentDirectory}
+                setCurrentDirectory={setCurrentDirectory}
+                selectedFile={selectedFile}
+                setSelectedFile={setSelectedFile}
+                lastChildDirectory={lastChildDirectory}
+            />
+            <FileViewer
+                currentDirectory={currentDirectory}
+                selectedFile={selectedFile}
+            />
         </div>
     )
 }

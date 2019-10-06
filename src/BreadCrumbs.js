@@ -1,31 +1,32 @@
-import { withRouter } from "react-router-dom";
 import "./BreadCrumbs.css";
 import React from "react";
 
-const BreadCrumbs = ({ path, history, setSelection }) => {
+const BreadCrumbs = ({ currentDirectory, setCurrentDirectory, setSelection }) => {
 
-    let dirs = path.split("/");
+    let dirs = currentDirectory.split("/");
 
     return (
         <div className="bread-crumbs">
             <div className="bread-crumbs-container">
                 {dirs.map((dir, i) => {
                     let elements = [];
+                    // create link for current dir in crumbs
                     let link = dirs.filter((dir, j) => {
                         return j <= i;
                     }).join("/");
+                    // Add link to root
                     if (i === 0 ) {
                         elements.push(<div
                             key={`${i}-start-bc`}
                             className="bread-crumb"
                             onClick={() => {
-                                history.push(`/`);
                                 setSelection("");
+                                setCurrentDirectory("");
                             }}
                         >
                             /
                         </div>);
-                        if (dirs[0] !== "") {
+                        if (dirs.length > 1) {
                             elements.push(<div key={`${i}-start-dv`} className="bread-crumb-divider has-text-grey-light">
                                 &gt;
                             </div>);
@@ -35,7 +36,7 @@ const BreadCrumbs = ({ path, history, setSelection }) => {
                         key={`${i}-bc`}
                         className="bread-crumb"
                         onClick={i !== dirs.length - 1 ? () => {
-                            history.push(`/${link}`);
+                            setCurrentDirectory(link);
                             setSelection("");
                         } : null}
                     >
@@ -53,4 +54,4 @@ const BreadCrumbs = ({ path, history, setSelection }) => {
     )
 };
 
-export default withRouter(BreadCrumbs);
+export default BreadCrumbs;
