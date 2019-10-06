@@ -18,6 +18,7 @@ function FileBrowser({ match, history }) {
     const setCurrentDirectory = (path, childDirectory = "") => {
         path = path[0] !== "/" ? `/${path}` : path;
         setLastChildDirectory(childDirectory);
+        setSelectedFile("");
         history.push(path);
     };
 

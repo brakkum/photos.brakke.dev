@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef, useRef } from "react";
 import "./FileNavigator.css";
 
 const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCurrentDirectory, lastChildDirectory }) => {
@@ -6,11 +6,22 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     const [directories, setDirectories] = useState([]);
     const [files, setFiles] = useState([]);
     const [parentDir, setParentDir] = useState("");
-    const [directoryIsLoaded, setDirectoryIsLoaded] = useState(false)
+    const [directoryIsLoaded, setDirectoryIsLoaded] = useState(false);
+    // const [directoryRefs, setDirectoryRefs] = [];
 
+    // fetch directory contents whenever currentDirectory changes
     useEffect(() => {
         fetchDirectoryContents(currentDirectory);
     }, [currentDirectory]);
+
+    useEffect(() => {
+        if (lastChildDirectory !== "") {
+            let childIndex = directories.indexOf(lastChildDirectory);
+            if (childIndex !== -1) {
+                directoryRefs[childIndex].scrollIntoView();
+            }
+        }
+    }, [directories]);
 
     const fetchDirectoryContents = directory => {
         fetch(`http://${window.location.hostname}:3001/api/get-dir`, {
@@ -37,6 +48,7 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     };
 
     let childDirectory = currentDirectory.split("/").pop();
+    let directoryRefs = [];
 
     return (
         <>
@@ -62,6 +74,7 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
                                 className={"item directory hoverable " +
                                     (lastChildDirectory === directory ? "selected" : "")
                                 }
+                                ref={el => directoryRefs[i] = el}
                                 key={i}
                                 onClick={() => setCurrentDirectory(link)}
                             >
