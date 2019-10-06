@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./FileNavigator.css";
 
 const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCurrentDirectory, lastChildDirectory }) => {
@@ -7,21 +7,29 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     const [files, setFiles] = useState([]);
     const [parentDir, setParentDir] = useState("");
     const [directoryIsLoaded, setDirectoryIsLoaded] = useState(false);
-    // const [directoryRefs, setDirectoryRefs] = [];
 
     // fetch directory contents whenever currentDirectory changes
     useEffect(() => {
         fetchDirectoryContents(currentDirectory);
     }, [currentDirectory]);
 
+    // when directories changes, we're in a new directory
+    // if there's a child directory, scroll to it
     useEffect(() => {
         if (lastChildDirectory !== "") {
             let childIndex = directories.indexOf(lastChildDirectory);
             if (childIndex !== -1) {
-                directoryRefs[childIndex].scrollIntoView();
+                directoryRefs[childIndex].scrollIntoView({
+                    block: "center"
+                });
             }
         }
     }, [directories]);
+
+    // start at top of listing
+    useEffect(() => {
+        window.scrollTo({ x: 0, y: 0 });
+    });
 
     const fetchDirectoryContents = directory => {
         fetch(`http://${window.location.hostname}:3001/api/get-dir`, {

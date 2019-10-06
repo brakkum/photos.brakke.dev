@@ -1,7 +1,7 @@
 import "./BreadCrumbs.css";
 import React from "react";
 
-const BreadCrumbs = ({ currentDirectory, setCurrentDirectory, setSelection }) => {
+const BreadCrumbs = ({ currentDirectory, setCurrentDirectory, setSelectedFile }) => {
 
     let dirs = currentDirectory.split("/");
 
@@ -20,13 +20,13 @@ const BreadCrumbs = ({ currentDirectory, setCurrentDirectory, setSelection }) =>
                             key={`${i}-start-bc`}
                             className="bread-crumb"
                             onClick={() => {
-                                setSelection("");
+                                setSelectedFile("");
                                 setCurrentDirectory("");
                             }}
                         >
                             /
                         </div>);
-                        if (dirs.length > 1) {
+                        if (dirs[0] !== "") {
                             elements.push(<div key={`${i}-start-dv`} className="bread-crumb-divider has-text-grey-light">
                                 &gt;
                             </div>);
@@ -37,7 +37,7 @@ const BreadCrumbs = ({ currentDirectory, setCurrentDirectory, setSelection }) =>
                         className="bread-crumb"
                         onClick={i !== dirs.length - 1 ? () => {
                             setCurrentDirectory(link);
-                            setSelection("");
+                            setSelectedFile("");
                         } : null}
                     >
                         {dir}
