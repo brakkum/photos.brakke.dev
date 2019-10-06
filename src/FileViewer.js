@@ -81,7 +81,7 @@ function FileViewer({ currentDirectory, selectedFile }) {
                             <source src={`/files/${currentDirectory}/${selectedFile}`} type="video/mp4" />
                         </video>
                     :
-                    <h4>&lt;&lt; Pick Something!</h4>
+                    <h4>You haven't selected anything!</h4>
                 }
             </div>
         </div>
