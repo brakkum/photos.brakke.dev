@@ -12,13 +12,11 @@ function FileBrowser({ match, history }) {
     // current selected file
     const [selectedFile, setSelectedFile] = useState("");
     // last child directory
-    const [lastChildDirectory, setLastChildDirectory] = useState("");
 
     // push new path to history
     const setCurrentDirectory = (path, childDirectory = "") => {
         path = path[0] !== "/" ? `/${path}` : path;
-        setLastChildDirectory(childDirectory);
-        setSelectedFile("");
+        setSelectedFile(childDirectory);
         history.push(path);
     };
 
@@ -34,7 +32,6 @@ function FileBrowser({ match, history }) {
                 setCurrentDirectory={setCurrentDirectory}
                 selectedFile={selectedFile}
                 setSelectedFile={setSelectedFile}
-                lastChildDirectory={lastChildDirectory}
             />
             <FileViewer
                 currentDirectory={currentDirectory}

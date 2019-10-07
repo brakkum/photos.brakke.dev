@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./FileNavigator.css";
 
-const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCurrentDirectory, lastChildDirectory }) => {
+const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCurrentDirectory }) => {
 
     const [directories, setDirectories] = useState([]);
     const [files, setFiles] = useState([]);
@@ -16,15 +16,16 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     // when directories changes, we're in a new directory
     // if there's a child directory, scroll to it
     useEffect(() => {
-        if (lastChildDirectory !== "") {
-            let childIndex = directories.indexOf(lastChildDirectory);
+        if (selectedFile) {
+            let childIndex = directories.includes(selectedFile) ? directories.indexOf(selectedFile) :
+                directories.length + files.indexOf(selectedFile);
             if (childIndex !== -1) {
-                directoryRefs[childIndex].scrollIntoView({
+                fileRefs[childIndex].scrollIntoView({
                     block: "center"
                 });
             }
         }
-    }, [directories]);
+    });
 
     // start at top of listing
     useEffect(() => {
@@ -32,26 +33,80 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     });
 
     const handleKeyPresses = event => {
-        if (files.length === 0) {
-            return;
-        }
-        const selectionIndex = files.indexOf(selectedFile);
+        let isEmptyDirectory = files.length === 0 && directories.length === 0;
+        let selectedFileIsDirectory = directories.includes(selectedFile);
+        let selectedFileIsFile = files.includes(selectedFile);
+        let selectionIndex = selectedFileIsDirectory ? directories.indexOf(selectedFile) :
+            selectedFileIsFile ? files.indexOf(selectedFile) : -1;
         switch (event.keyCode) {
+            // left arrow
+            case 37: {
+                setCurrentDirectory(parentDir, childDirectory);
+            }
+            break;
             // up arrow
-            case 38:
-                if (selectionIndex === -1 || selectionIndex === 0) {
-                    setSelectedFile(files[files.length - 1]);
-                } else {
-                    setSelectedFile(files[selectionIndex - 1]);
+            case 38: {
+                if (isEmptyDirectory) {
+                    return;
                 }
+                // nothing selected yet
+                if (!selectedFileIsFile && !selectedFileIsDirectory) {
+                    if (files.length > 0) {
+                        setSelectedFile(files[files.length - 1]);
+                    } else {
+                        setSelectedFile(directories[0]);
+                    }
+                    return;
+                }
+                let thisTypeArray = selectedFileIsDirectory ? directories : files;
+                let otherTypeArray = selectedFileIsDirectory ? files : directories;
+                if (selectionIndex === -1 || selectionIndex === 0) {
+                    if (otherTypeArray.length > 0) {
+                        setSelectedFile(otherTypeArray[otherTypeArray.length - 1]);
+                    } else {
+                        setSelectedFile(thisTypeArray[thisTypeArray.length - 1]);
+                    }
+                } else {
+                    setSelectedFile(thisTypeArray[selectionIndex - 1]);
+                }
+            }
+            break;
+            // right arrow
+            case 39: {
+                if (isEmptyDirectory) {
+                    return;
+                }
+                if (selectedFileIsDirectory) {
+                    setCurrentDirectory(`${currentDirectory}/${directories[selectionIndex]}`);
+                }
+            }
             break;
             // down arrow
-            case 40:
-                if (selectionIndex === -1 || selectionIndex === files.length - 1) {
-                    setSelectedFile(files[0]);
-                } else {
-                    setSelectedFile(files[selectionIndex + 1]);
+            case 40: {
+                if (isEmptyDirectory) {
+                    return;
                 }
+                // nothing selected yet
+                if (!selectedFileIsFile && !selectedFileIsDirectory) {
+                    if (directories.length > 0) {
+                        setSelectedFile(directories[0]);
+                    } else {
+                        setSelectedFile(files[0]);
+                    }
+                    return;
+                }
+                let thisTypeArray = selectedFileIsDirectory ? directories : files;
+                let otherTypeArray = selectedFileIsDirectory ? files : directories;
+                if (selectionIndex === thisTypeArray.length - 1) {
+                    if (otherTypeArray.length > 0) {
+                        setSelectedFile(otherTypeArray[0]);
+                    } else {
+                        setSelectedFile(thisTypeArray[0]);
+                    }
+                } else {
+                    setSelectedFile(thisTypeArray[selectionIndex + 1]);
+                }
+            }
             break;
         }
     };
@@ -87,7 +142,7 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     };
 
     let childDirectory = currentDirectory.split("/").pop();
-    let directoryRefs = [];
+    let fileRefs = [];
 
     return (
         <>
@@ -111,9 +166,9 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
                             let link = currentDirectory ? `/${currentDirectory}/${directory}` : `/${directory}`;
                             return <div
                                 className={"item directory hoverable " +
-                                    (lastChildDirectory === directory ? "selected" : "")
+                                    (selectedFile === directory ? "selected" : "")
                                 }
-                                ref={el => directoryRefs[i] = el}
+                                ref={el => fileRefs[i] = el}
                                 key={i}
                                 onClick={() => setCurrentDirectory(link)}
                             >
@@ -129,6 +184,7 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
                         {files.map((file, i) => {
                             return <div
                                 className={"item file hoverable " + (selectedFile === file ? "selected" : "")}
+                                ref={el => fileRefs[directories.length + i] = el}
                                 key={i}
                                 onClick={() => selectedFile !== file ? setSelectedFile(file) : null}
                             >
