@@ -37,7 +37,7 @@ function FileViewer({ currentDirectory, selectedFile }) {
                 className="file-copy-link"
                 defaultValue={`${window.location.host}/files/${currentDirectory}/${selectedFile}`}
             />
-            {selectedFile !== "" &&
+            {selectedFile !== "" && (isPhoto || isVideo) &&
                 <>
                     <div
                         className={"loading-div " + (isLoaded ? "loaded" : "")}

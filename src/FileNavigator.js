@@ -17,8 +17,9 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     // if there's a child directory, scroll to it
     useEffect(() => {
         if (selectedFile) {
-            let childIndex = directories.includes(selectedFile) ? directories.indexOf(selectedFile) :
-                directories.length + files.indexOf(selectedFile);
+            let childIndex = directories.includes(selectedFile) ?
+                directories.indexOf(selectedFile) :
+                    directories.length + files.indexOf(selectedFile);
             if (childIndex !== -1) {
                 fileRefs[childIndex].scrollIntoView({
                     block: "center"
@@ -54,7 +55,7 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
                     if (files.length > 0) {
                         setSelectedFile(files[files.length - 1]);
                     } else {
-                        setSelectedFile(directories[0]);
+                        setSelectedFile(directories[directories.length - 1]);
                     }
                     return;
                 }
