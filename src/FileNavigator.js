@@ -31,6 +31,37 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
         window.scrollTo({ x: 0, y: 0 });
     });
 
+    const handleKeyPresses = event => {
+        if (files.length === 0) {
+            return;
+        }
+        const selectionIndex = files.indexOf(selectedFile);
+        switch (event.keyCode) {
+            // up arrow
+            case 38:
+                if (selectionIndex === -1 || selectionIndex === 0) {
+                    setSelectedFile(files[files.length - 1]);
+                } else {
+                    setSelectedFile(files[selectionIndex - 1]);
+                }
+            break;
+            // down arrow
+            case 40:
+                if (selectionIndex === -1 || selectionIndex === files.length - 1) {
+                    setSelectedFile(files[0]);
+                } else {
+                    setSelectedFile(files[selectionIndex + 1]);
+                }
+            break;
+        }
+    };
+
+    // listen for up and down arrow
+    useEffect(() => {
+        document.addEventListener("keydown", handleKeyPresses);
+        return () => document.removeEventListener("keydown", handleKeyPresses);
+    });
+
     const fetchDirectoryContents = directory => {
         fetch(`http://${window.location.hostname}:3001/api/get-dir`, {
             method: "post",
