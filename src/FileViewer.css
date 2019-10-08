@@ -1,6 +1,6 @@
 
 .file-view {
-    background: rgb(207, 207, 207);
+    background: rgb(136, 136, 136);
     grid-area: file-view;
 }
 
@@ -62,6 +62,7 @@
 }
 
 .video {
+    z-index: 2;
     max-width: 90%;
     max-height: 80vh;
     height: auto;

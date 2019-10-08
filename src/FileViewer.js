@@ -53,7 +53,7 @@ function FileViewer({ currentDirectory, selectedFile }) {
                         <button
                             onClick={copyLinkToClipboard}
                             className={"get-link button " +
-                                (linkCopied ? " is-danger " : " is-link is-outlined ") +
+                                (linkCopied ? " is-danger " : " is-light is-outlined ") +
                                 (isLoaded ? " loaded " : "")
                             }
                         >
