@@ -201,9 +201,9 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
                     </>
                     :
                     directoryIsLoaded ?
-                        <h2 style={{margin: "20px auto", textAlign: "center"}}>Looks like this directory is empty!</h2>
+                        <h2 style={{margin: "20px auto", textAlign: "center"}} className="item">Looks like this directory is empty!</h2>
                     :
-                        <h2 style={{margin: "20px auto", textAlign: "center"}}>Loading...</h2>
+                        <h2 style={{margin: "20px auto", textAlign: "center"}} className="item">Loading...</h2>
                 }
             </nav>
         </>
