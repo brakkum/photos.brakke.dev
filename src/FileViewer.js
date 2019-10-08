@@ -77,11 +77,15 @@ function FileViewer({ currentDirectory, selectedFile }) {
                             key={selectedFile}
                             onLoadedMetadata={() => setIsLoaded(true)}
                             controls
+                            autoPlay={true}
                         >
                             <source src={`/files/${currentDirectory}/${selectedFile}`} type="video/mp4" />
                         </video>
                     :
-                    <h4>You haven't selected anything!</h4>
+                    <>
+                        <h4 className="is-size-4">You haven't selected anything!</h4>
+                        <h5 className="is-size-5">(You can use the arrow keys, too)</h5>
+                    </>
                 }
             </div>
         </div>

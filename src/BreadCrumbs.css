@@ -1,7 +1,6 @@
 
 .bread-crumbs {
     grid-area: breadcrumbs;
-    background: rgb(255, 233, 191);
 }
 
 .bread-crumbs-container {
@@ -15,13 +14,13 @@
 
 .bread-crumb {
     margin-right: 10px;
-    color: rgb(144, 144, 199);
+    color: rgb(182, 230, 241);
     cursor: pointer;
     text-align: center;
 }
 
 .bread-crumb:hover {
-    color: rgb(135, 162, 192);
+    color: rgb(90, 154, 226);
 }
 
 .bread-crumb-divider {

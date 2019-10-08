@@ -10,13 +10,14 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
 
     // fetch directory contents whenever currentDirectory changes
     useEffect(() => {
+        setDirectoryIsLoaded(false);
         fetchDirectoryContents(currentDirectory);
     }, [currentDirectory]);
 
     // when directories changes, we're in a new directory
     // if there's a child directory, scroll to it
     useEffect(() => {
-        if (selectedFile) {
+        if (selectedFile && directoryIsLoaded) {
             let childIndex = directories.includes(selectedFile) ?
                 directories.indexOf(selectedFile) :
                     directories.length + files.indexOf(selectedFile);
@@ -26,7 +27,7 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
                 });
             }
         }
-    });
+    }, [directoryIsLoaded, selectedFile]);
 
     // start at top of listing
     useEffect(() => {
@@ -108,6 +109,9 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
                     setSelectedFile(thisTypeArray[selectionIndex + 1]);
                 }
             }
+            break;
+            default:
+                console.log("I can't believe you've done this.");
             break;
         }
     };

@@ -6,7 +6,7 @@ const BreadCrumbs = ({ currentDirectory, setCurrentDirectory, setSelectedFile })
     let dirs = currentDirectory.split("/");
 
     return (
-        <div className="bread-crumbs">
+        <nav className="bread-crumbs navbar is-dark">
             <div className="bread-crumbs-container">
                 {dirs.map((dir, i) => {
                     let elements = [];
@@ -50,7 +50,7 @@ const BreadCrumbs = ({ currentDirectory, setCurrentDirectory, setSelectedFile })
                     return elements;
                 })}
             </div>
-        </div>
+        </nav>
     )
 };
 
