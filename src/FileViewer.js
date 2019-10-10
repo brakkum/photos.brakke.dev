@@ -24,7 +24,7 @@ function FileViewer({ currentDirectory, selectedFile }) {
     };
 
     const fileExt = selectedFile.split(".").pop().toLowerCase();
-    const imageTypes = ["jpg", "jpeg", "tiff"];
+    const imageTypes = ["jpg", "jpeg", "tiff", "png"];
     const videoTypes = ["mov", "mp4"];
     const isPhoto = imageTypes.includes(fileExt);
     const isVideo = videoTypes.includes(fileExt);
