@@ -8,10 +8,9 @@ server.use(express.json());
 server.use(cors());
 
 server.post("/api/get-dir", (request, response) => {
-    console.log(request.body)
+
     const dir = request.body.dir || "";
     const dir_path = `public/files/${dir}`;
-    console.log(`got dir: ${dir} ${Date.now()}`);
 
     // get parent dir for navigation
     // split the dirs
@@ -23,8 +22,6 @@ server.post("/api/get-dir", (request, response) => {
     dirs.pop();
     // recombine dirs
     let parent_dir = dirs.join("/");
-    console.log(`dir_path: ${dir_path}`);
-    console.log(`parent: ${parent_dir}`);
 
     if (fs.existsSync(dir_path) && fs.lstatSync(dir_path).isDirectory()) {
         // valid directory
