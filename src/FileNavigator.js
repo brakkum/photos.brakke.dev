@@ -123,7 +123,7 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     });
 
     const fetchDirectoryContents = directory => {
-        fetch(`http://${window.location.hostname}:3001/api/get-dir`, {
+        fetch(`https://${window.location.hostname}:3001/api/get-dir`, {
             method: "post",
             body: JSON.stringify({
                 dir: directory

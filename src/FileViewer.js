@@ -83,8 +83,8 @@ function FileViewer({ currentDirectory, selectedFile }) {
                         </video>
                     :
                     <>
-                        <h4 className="is-size-4">You haven't selected anything!</h4>
-                        <h5 className="is-size-5">(You can use the arrow keys, too)</h5>
+                        <h4 className="is-size-4 has-text-dark">You haven't selected anything!</h4>
+                        <h5 className="is-size-5 has-text-dark">(You can use the arrow keys, too)</h5>
                     </>
                 }
             </div>
