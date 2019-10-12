@@ -25,6 +25,6 @@ yarn-error.log*
 .idea/
 .vscode/
 
-public/photos/*
-public/files/*
+public/photos/
+public/files/
 

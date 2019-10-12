@@ -111,7 +111,6 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
             }
             break;
             default:
-                console.log("I can't believe you've done this.");
             break;
         }
     };
@@ -123,7 +122,7 @@ const FileNavigator = ({ currentDirectory, selectedFile, setSelectedFile, setCur
     });
 
     const fetchDirectoryContents = directory => {
-        fetch(`https://${window.location.hostname}:3001/api/get-dir`, {
+        fetch(`/api/get-dir/`, {
             method: "post",
             body: JSON.stringify({
                 dir: directory
