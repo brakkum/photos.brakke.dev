@@ -6,3 +6,9 @@ html {
 #root {
     height: 100vh;
 }
+
+@media (max-width: 500px) {
+    div, span, h1, h2, h3, h4, h5, h6, .has-text-dark {
+        font-size: 10px !important;
+    }
+}

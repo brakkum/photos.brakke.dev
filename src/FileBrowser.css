@@ -17,6 +17,6 @@
             "file-nav file-nav"
             "file-view file-view";
         grid-template-columns: minmax(20%, 150px) auto;
-        grid-template-rows: 60px 200px auto;
+        grid-template-rows: 60px 20vh auto;
     }
 }
