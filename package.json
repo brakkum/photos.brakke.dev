@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "bulma": "^0.7.5",
+        "copy-to-clipboard": "^3.2.0",
         "cors": "^2.8.5",
         "express": "^4.17.1",
         "react": "^16.10.1",

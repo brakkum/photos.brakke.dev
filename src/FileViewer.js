@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import copy from "copy-to-clipboard";
 import "./FileViewer.css";
 
 function FileViewer({ currentDirectory, selectedFile }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [linkCopied, setLinkCopied] = useState(false);
-    const copyRef = useRef(null);
 
     useEffect(() => {
         setIsLoaded(false);
@@ -15,31 +15,7 @@ function FileViewer({ currentDirectory, selectedFile }) {
     }, [selectedFile]);
 
     const copyLinkToClipboard = () => {
-        var input = copyRef.current;
-        var isiOSDevice = navigator.userAgent.match(/ipad|iphone/i);
-
-        if (isiOSDevice) {
-
-            var editable = input.contentEditable;
-            var readOnly = input.readOnly;
-
-            input.contentEditable = true;
-            input.readOnly = false;
-
-            var range = document.createRange();
-            range.selectNodeContents(input);
-
-            var selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            input.setSelectionRange(0, 999999);
-            input.contentEditable = editable;
-            input.readOnly = readOnly;
-        } else {
-             input.select();
-        }
-        document.execCommand('copy');
+        copy(`${window.location.host}/files/${currentDirectory}/${selectedFile}`);
         setLinkCopied(true);
         setTimeout(() => {
             setLinkCopied(false);
@@ -54,12 +30,6 @@ function FileViewer({ currentDirectory, selectedFile }) {
 
     return (
         <div className="file-view">
-            <input
-                key={selectedFile}
-                ref={copyRef}
-                className="file-copy-link"
-                defaultValue={`${window.location.host}/files/${currentDirectory}/${selectedFile}`}
-            />
             {selectedFile !== "" && (isPhoto || isVideo) &&
                 <>
                     <div
